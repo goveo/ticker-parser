@@ -1,0 +1,29 @@
+{
+  "name": "ticker-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/app.js",
+  "scripts": {
+    "dev": "nodemon ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goveo/ticker-parser.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/goveo/ticker-parser/issues"
+  },
+  "homepage": "https://github.com/goveo/ticker-parser#readme",
+  "dependencies": {
+    "crawler": "^1.2.0",
+    "dotenv": "^6.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "needle": "^2.2.4"
+  }
+}
