@@ -4,18 +4,18 @@ mongoose.Promise = global.Promise;
 const database = require('./database');
 
 const tickerSchema = new Schema({
-    id: Number,
+    id: String,
     link: String,
     name: String,
     company: String,
     sector: String,
     industry: String,
     country: String,
-    marketCap: Number,
-    pe: Number,
-    proce: Number,
+    marketCap: String,
+    pe: String,
+    proce: String,
     change: String,
-    volume: Number
+    volume: String
 });
 
 const Ticker = mongoose.model("ticker", tickerSchema);
