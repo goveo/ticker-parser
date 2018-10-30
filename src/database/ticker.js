@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const autoIncrement = require('mongoose-sequence')(mongoose);
+const mongoosePaginate = require('mongoose-paginate');
 mongoose.Promise = global.Promise;
 
 const tickerSchema = new Schema({
-    id: String,
     link: String,
     name: String,
     company: String,
@@ -16,6 +17,11 @@ const tickerSchema = new Schema({
     change: String,
     volume: String
 });
+
+tickerSchema.plugin(autoIncrement, {
+    inc_field: 'id'
+});
+
 
 const Ticker = mongoose.model("ticker", tickerSchema);
 
@@ -60,8 +66,8 @@ async function removeTickerById(tickerId) {
     });
 }
 
-async function updateTickerById(tickerId, newTickerObject) {
-    return await Ticker.findOneAndUpdate({ id: tickerId }, newTickerObject, (err, data) => {
+async function updateTickerByName(tickerName, newTickerObject) {
+    return await Ticker.findOneAndUpdate({ name: tickerName }, newTickerObject, (err, data) => {
         if(err) {
             return err;
         } else {
@@ -87,7 +93,7 @@ async function createOrUpdateTicker(newTicker){
     // delete ticker._id;
     return new Promise((resolve, reject) => {
         Ticker.findOneAndUpdate({
-            id: newTicker.id
+            name: newTicker.name
         }, newTicker)
             .then((data) => {
                 if(data == null) {
@@ -118,5 +124,7 @@ module.exports = {
     getTickerById: getTickerById,
     removeTickerById: removeTickerById,
     createOrUpdateTicker: createOrUpdateTicker,
+    updateTickerByName: updateTickerByName,
+    findTicker: findTicker,
     Ticker: Ticker
 }

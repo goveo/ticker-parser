@@ -51,7 +51,7 @@ function parse(url) {
 
 function createTickerObj(arr) {
     return {
-        id: arr[0],
+        // id: arr[0],
         link: arr[1],
         name: arr[2],
         company: arr[3],
