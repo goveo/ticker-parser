@@ -14,7 +14,8 @@ async function start(){
         else{
             console.log("mongo connected");
             // setInterval(parser.parse(), );
-            parser.parse(URL);
+            // parser.parse(URL);
+            mongoose.connection.dropDatabase();
         }
     });
 }
@@ -22,4 +23,3 @@ async function start(){
 module.exports = {
     start: start
 }
-
