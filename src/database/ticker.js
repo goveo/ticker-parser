@@ -52,16 +52,6 @@ async function getAllTickers() {
     });
 }
 
-async function getNumRandomTickers(num){
-    return await Ticker.findRandom({}, {}, {count: num}, (err, data) => {
-        if (err){
-            return err;
-        } else {
-            return data;
-        }
-    })
-}
-
 async function getTickerById(tickerId) {
     return await Ticker.findOne({ id: tickerId }, (err, data) => {
         if (err) {
@@ -150,7 +140,7 @@ async function getRandomTickers(number) {
         if (err) {
             console.log("err");
         } else {
-            console.log(data);
+            //console.log(data);
         }
     });
 }
@@ -158,7 +148,6 @@ async function getRandomTickers(number) {
 module.exports = {
     createTicker: createTicker,
     getAllTickers: getAllTickers,
-    getNumRandomTickers: getNumRandomTickers,
     getTickerById: getTickerById,
     removeTickerById: removeTickerById,
     createOrUpdateTicker: createOrUpdateTicker,

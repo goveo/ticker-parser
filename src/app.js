@@ -21,10 +21,27 @@ app.listen(port, (err) => {
 });
 
 app.get('/', (req, res) => {
-    tickersBase.getNumRandomTickers(10)
-    .then(data => console.log(data))
+    tickersBase.getRandomTickers(10)
+    .then(data => {
+        res.render('index', {
+            tickers: data
+        })
+    })
     .catch(err => console.log(err));
-    res.render('index', {
-        user: req.user
-    });
 });
+
+app.get('/search', (req, res) => {
+    let toSearch = req.query.name;
+    let page = req.query.page;
+    if(page == undefined || page == ""){
+        page = 1;
+    }
+    tickersBase.findTickerByName(toSearch, page)
+    .then(data => {
+        res.render('search', {
+            tickers: data,
+            toSearch: toSearch
+        })
+    })
+    .catch(err => console.log(err));
+})

@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Ticker-parser</title>
-	<meta name="description" content="Main page">
+	<title>Search</title>
+	<meta name="description" content="Search page">
 	<link type="text/css" href="stylesheets/index.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -51,7 +51,7 @@
         </thead>
     	<tbody>
     
-	<% for (let ticker of tickers) { %>
+	<% for (let ticker of tickers.docs) { %>
     <tr>
     <td><%= ticker.name %></td>
     <td><%= ticker.company %></td>
@@ -70,6 +70,35 @@
     </tbody>
         
 	</table>
+
+    <div class="pagination">
+                <% if (tickers.pages > 0) { %>
+                    <% if (tickers.page == 1) { %>
+                        <a>First</a>
+                    <% } else { %>
+                        <a href="/search?name=<%= toSearch %>&page=1">First</a>
+                    <% } %>
+                    <% let i = (Number(tickers.page) > 5 ? Number(tickers.page) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <a>...</a>
+                    <% } %>
+                    <% for (; i <= (Number(tickers.page) + 4) && i <= tickers.pages; i++) { %>
+                        <% if (i == tickers.page) { %>
+                            <a class="active"><%= i %></a>
+                        <% } else { %>
+                            <a href="/search?name=<%= toSearch %>&page=<%= i %>"><%= i %></a>
+                        <% } %>
+                        <% if (i == Number(tickers.page) + 4 && i < tickers.pages) { %>
+                            <a>...</a>
+                        <% } %>
+                    <% } %>
+                    <% if (tickers.page == tickers.pages) { %>
+                        <a>Last</a>
+                    <% } else { %>
+                        <a href="/search?name=<%= toSearch %>&page=<%= tickers.pages %>">Last</a>
+                    <% } %>
+                <% } %>
+            </div>
 
 
 </body>
