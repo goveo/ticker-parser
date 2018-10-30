@@ -21,6 +21,7 @@ const tickerSchema = new Schema({
 tickerSchema.plugin(autoIncrement, {
     inc_field: 'id'
 });
+tickerSchema.plugin(mongoosePaginate);
 
 
 const Ticker = mongoose.model("ticker", tickerSchema);
@@ -76,6 +77,25 @@ async function updateTickerByName(tickerName, newTickerObject) {
     })
 }
 
+async function findTickerByName(name, page){
+    let regexp = '.*(?i)' + name + '.*'
+    return await Ticker.paginate({
+        name: {
+            $regex: regexp
+        }
+    }, {
+        limit: 10,
+        page: page
+    }, (err, data) => {
+        if(err){
+            console.log("err");
+            return(err);
+        } else {
+            return data;
+        }
+    });
+}
+
 async function findTicker(searchObject){
     //TODO validate searchObject
     return await Ticker.find(searchObject, (err, data) => {
@@ -126,5 +146,6 @@ module.exports = {
     createOrUpdateTicker: createOrUpdateTicker,
     updateTickerByName: updateTickerByName,
     findTicker: findTicker,
+    findTickerByName: findTickerByName,
     Ticker: Ticker
 }
