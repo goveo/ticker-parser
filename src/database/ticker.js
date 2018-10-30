@@ -13,7 +13,7 @@ const tickerSchema = new Schema({
     country: String,
     marketCap: String,
     pe: String,
-    proce: String,
+    price: String,
     change: String,
     volume: String
 });
