@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const random = require('mongoose-simple-random');
+
 mongoose.Promise = global.Promise;
 
 const tickerSchema = new Schema({
@@ -16,6 +18,7 @@ const tickerSchema = new Schema({
     change: String,
     volume: String
 });
+tickerSchema.plugin(random);
 
 const Ticker = mongoose.model("ticker", tickerSchema);
 
@@ -38,6 +41,16 @@ async function getAllTickers() {
             return data;
         }
     });
+}
+
+async function getNumRandomTickers(num){
+    return await Ticker.findRandom({}, {}, {count: num}, (err, data) => {
+        if (err){
+            return err;
+        } else {
+            return data;
+        }
+    })
 }
 
 async function getTickerById(tickerId) {
@@ -115,6 +128,7 @@ async function createOrUpdateTicker(newTicker){
 module.exports = {
     createTicker: createTicker,
     getAllTickers: getAllTickers,
+    getNumRandomTickers: getNumRandomTickers,
     getTickerById: getTickerById,
     removeTickerById: removeTickerById,
     createOrUpdateTicker: createOrUpdateTicker,

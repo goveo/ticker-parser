@@ -14,7 +14,7 @@ async function start(){
         else{
             console.log("mongo connected");
             // setInterval(parser.parse(), );
-            parser.parse(URL);
+            //parser.parse(URL);
         }
     });
 }
