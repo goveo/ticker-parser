@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-sequence')(mongoose);
 const mongoosePaginate = require('mongoose-paginate');
+const random = require('mongoose-random');
 mongoose.Promise = global.Promise;
 
 const tickerSchema = new Schema({
@@ -23,6 +24,9 @@ tickerSchema.plugin(autoIncrement, {
 });
 tickerSchema.plugin(mongoosePaginate);
 
+tickerSchema.plugin(random, {
+    path: 'r'
+});
 
 const Ticker = mongoose.model("ticker", tickerSchema);
 
@@ -69,7 +73,7 @@ async function removeTickerById(tickerId) {
 
 async function updateTickerByName(tickerName, newTickerObject) {
     return await Ticker.findOneAndUpdate({ name: tickerName }, newTickerObject, (err, data) => {
-        if(err) {
+        if (err) {
             return err;
         } else {
             return "updated";
@@ -77,29 +81,29 @@ async function updateTickerByName(tickerName, newTickerObject) {
     })
 }
 
-async function findTickerByName(name, page){
+async function findTickerByName(name, page) {
     let regexp = '.*(?i)' + name + '.*'
     return await Ticker.paginate({
         name: {
             $regex: regexp
         }
     }, {
-        limit: 10,
-        page: page
-    }, (err, data) => {
-        if(err){
-            console.log("err");
-            return(err);
-        } else {
-            return data;
-        }
-    });
+            limit: 10,
+            page: page
+        }, (err, data) => {
+            if (err) {
+                console.log("err");
+                return (err);
+            } else {
+                return data;
+            }
+        });
 }
 
-async function findTicker(searchObject){
+async function findTicker(searchObject) {
     //TODO validate searchObject
     return await Ticker.find(searchObject, (err, data) => {
-        if(err) {
+        if (err) {
             return err;
         } else {
             return data;
@@ -107,7 +111,7 @@ async function findTicker(searchObject){
     });
 }
 
-async function createOrUpdateTicker(newTicker){
+async function createOrUpdateTicker(newTicker) {
     // console.log(newTicker);
     // let ticker = new Ticker(newTicker);
     // delete ticker._id;
@@ -116,7 +120,7 @@ async function createOrUpdateTicker(newTicker){
             name: newTicker.name
         }, newTicker)
             .then((data) => {
-                if(data == null) {
+                if (data == null) {
                     console.log('creating');
                     createTicker(newTicker);
                 } else {
@@ -127,15 +131,17 @@ async function createOrUpdateTicker(newTicker){
                 console.log(err);
             })
     })
-    // console.log(newTicker);
-    // return await Ticker.findOneAndUpdate({id: newTicker.id}, new Ticker(newTicker), (err, data) => {
-    //     if(err){
-    //         console.log(err);
-    //         return createTicker(newTicker);
-    //     } else {
-    //         return "updated";
-    //     }
-    // });
+}
+
+async function getRandomTickers(number) {
+    
+    return await Ticker.findRandom({}, {}, { limit: number }, (err, data) => {
+        if (err) {
+            console.log("err");
+        } else {
+            console.log(data);
+        }
+    });
 }
 
 module.exports = {
@@ -147,5 +153,6 @@ module.exports = {
     updateTickerByName: updateTickerByName,
     findTicker: findTicker,
     findTickerByName: findTickerByName,
+    getRandomTickers: getRandomTickers,
     Ticker: Ticker
 }

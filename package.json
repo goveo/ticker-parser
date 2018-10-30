@@ -27,7 +27,9 @@
     "mongoose": "^5.3.7",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-paginate": "^5.0.3",
+    "mongoose-random": "^0.1.1",
     "mongoose-sequence": "^4.0.1",
+    "mongoose-simple-random": "^0.4.1",
     "needle": "^2.2.4",
     "url-parse": "^1.4.3"
   }
