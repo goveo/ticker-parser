@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Ticker-parser</title>
+	<meta name="description" content="Main page">
+	<link type="text/css" href="stylesheets/index.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <% include partials/header %>
+
+	<div class="container">
+    <br/>
+	<div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <form class="card card-sm" action="/search" method="get">
+                                <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <i class="fas fa-search h4 text-body"></i>
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col">
+                                        <input name="name" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search by name">
+                                    </div>
+                                    <input name="page" type="hidden" value="1">
+                                    <!--end of col-->
+                                    <div class="col-auto">
+                                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                            </form>
+                        </div>
+                        <!--end of col-->
+                    </div>
+	</div>
+	<table id="mytable" class="table table-bordred table-striped">
+                   
+        <thead>
+        	<th>Name</th>
+            <th>Company</th>
+            <th>Sector</th>
+            <th>Industry</th>
+            <th>Country</th>
+            <th>Market Cap</th>
+            <th>P/E</th>
+			<th>Price</th>
+			<th>Change</th>
+			<th>Volume</th>
+        </thead>
+    	<tbody>
+    
+	<% for (let ticker of tickers) { %>
+    <tr>
+    <td><%= ticker.name %></td>
+    <td><%= ticker.company %></td>
+    <td><%= ticker.sector %></td>
+    <td><%= ticker.industry %></td>
+    <td><%= ticker.country %></td>
+	<td><%= ticker.marketCap %></td>
+	<td><%= ticker.pe %></td>
+	<td><%= ticker.price %></td>
+	<td><%= ticker.change %></td>
+	<td><%= ticker.volume %></td>
+    </tr>
+	<% } %>
+   
+    
+    </tbody>
+        
+	</table>
+
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.navbar a {
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar > a {
+    float: right;
+}
+
+.hypers{
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    float: left;
+}
+
+.navbar a:hover, {
+    background-color: red;
+}

@@ -18,6 +18,7 @@ const tickerSchema = new Schema({
     change: String,
     volume: String
 });
+tickerSchema.plugin(random);
 
 tickerSchema.plugin(autoIncrement, {
     inc_field: 'id'
@@ -41,8 +42,8 @@ async function createTicker(tickerObject) {
     });
 }
 
-async function getAllTickers() {
-    return await Ticker.find({}, (err, data) => {
+async function getAllTickers(page) {
+    return await Ticker.paginate({}, { limit: 10, page: page}, (err, data) => {
         if (err) {
             return err;
         } else {
@@ -139,7 +140,7 @@ async function getRandomTickers(number) {
         if (err) {
             console.log("err");
         } else {
-            console.log(data);
+            //console.log(data);
         }
     });
 }

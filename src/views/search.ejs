@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Search</title>
+	<meta name="description" content="Search page">
+	<link type="text/css" href="stylesheets/search.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <% include partials/header %>
+
+	<div class="container">
+    <br/>
+	<div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <form class="card card-sm" action="/search?page=1" method="get">
+                                <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <i class="fas fa-search h4 text-body"></i>
+                                    </div>
+                                    <!--end of col-->
+                                    <div class="col">
+                                        <input name="name" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search by name">
+                                    </div>
+                                    <input name="page" type="hidden" value="1">
+                                    <!--end of col-->
+                                    <div class="col-auto">
+                                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                                    </div>
+                                    <!--end of col-->
+                                </div>
+                            </form>
+                        </div>
+                        <!--end of col-->
+                    </div>
+	</div>
+	<table id="mytable" class="table table-bordred table-striped">
+                   
+        <thead>
+        	<th>Name</th>
+            <th>Company</th>
+            <th>Sector</th>
+            <th>Industry</th>
+            <th>Country</th>
+            <th>Market Cap</th>
+            <th>P/E</th>
+			<th>Price</th>
+			<th>Change</th>
+			<th>Volume</th>
+        </thead>
+    	<tbody>
+    
+	<% for (let ticker of tickers.docs) { %>
+    <tr>
+    <td><%= ticker.name %></td>
+    <td><%= ticker.company %></td>
+    <td><%= ticker.sector %></td>
+    <td><%= ticker.industry %></td>
+    <td><%= ticker.country %></td>
+	<td><%= ticker.marketCap %></td>
+	<td><%= ticker.pe %></td>
+	<td><%= ticker.price %></td>
+	<td><%= ticker.change %></td>
+	<td><%= ticker.volume %></td>
+    </tr>
+	<% } %>
+   
+    
+    </tbody>
+        
+	</table>
+
+    <div class="pagination">
+                <% if (tickers.pages > 0) { %>
+                    <% if (tickers.page == 1) { %>
+                        <a>First</a>
+                    <% } else { %>
+                        <a href="/search?name=<%= toSearch %>&page=1">First</a>
+                    <% } %>
+                    <% let i = (Number(tickers.page) > 5 ? Number(tickers.page) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <a>...</a>
+                    <% } %>
+                    <% for (; i <= (Number(tickers.page) + 4) && i <= tickers.pages; i++) { %>
+                        <% if (i == tickers.page) { %>
+                            <a class="active"><%= i %></a>
+                        <% } else { %>
+                            <a href="/search?name=<%= toSearch %>&page=<%= i %>"><%= i %></a>
+                        <% } %>
+                        <% if (i == Number(tickers.page) + 4 && i < tickers.pages) { %>
+                            <a>...</a>
+                        <% } %>
+                    <% } %>
+                    <% if (tickers.page == tickers.pages) { %>
+                        <a>Last</a>
+                    <% } else { %>
+                        <a href="/search?name=<%= toSearch %>&page=<%= tickers.pages %>">Last</a>
+                    <% } %>
+                <% } %>
+            </div>
+
+
+</body>
+</html>
