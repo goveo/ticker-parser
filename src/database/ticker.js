@@ -42,8 +42,8 @@ async function createTicker(tickerObject) {
     });
 }
 
-async function getAllTickers() {
-    return await Ticker.find({}, (err, data) => {
+async function getAllTickers(page) {
+    return await Ticker.paginate({}, { limit: 10, page: page}, (err, data) => {
         if (err) {
             return err;
         } else {

@@ -45,3 +45,17 @@ app.get('/search', (req, res) => {
     })
     .catch(err => console.log(err));
 })
+
+app.get('/catalogue', (req, res) => {
+    let page = req.query.page;
+    if(page == undefined || page == ""){
+        page = 1;
+    }
+    tickersBase.getAllTickers(page)
+    .then(data => {
+        res.render('catalogue', {
+            tickers: data
+        })
+    })
+    .catch(err => console.log(err));
+})

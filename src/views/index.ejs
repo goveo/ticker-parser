@@ -11,6 +11,8 @@
 </head>
 <body>
 
+    <% include partials/header %>
+
 	<div class="container">
     <br/>
 	<div class="row justify-content-center">
@@ -22,8 +24,9 @@
                                     </div>
                                     <!--end of col-->
                                     <div class="col">
-                                        <input name="name" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search name">
+                                        <input name="name" class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search by name">
                                     </div>
+                                    <input name="page" type="hidden" value="1">
                                     <!--end of col-->
                                     <div class="col-auto">
                                         <button class="btn btn-lg btn-success" type="submit">Search</button>
