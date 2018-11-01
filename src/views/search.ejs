@@ -72,36 +72,62 @@
     
     </tbody>
         
-	</table>
-
+    </table>
+    
     <div class="pagination">
-                <% if (tickers.pages > 0) { %>
-                    <% if (tickers.page == 1) { %>
-                        <a>First</a>
+        <% if (tickers.pages > 0) { %>
+            <% if (tickers.page == 1) { %>
+                <a>First</a>
+            <% } else { %>
+                <a href="/search?name=<%= toSearch %>&page=1">First</a>
+            <% } %>
+            <% if (tickers.page <= 6) { // current page < 6 %>
+                <% let i; %>
+                <% for (i = 1; i <= 10 && i <= tickers.pages; i++) { %>
+                    <% if (i == tickers.page) { %>
+                        <a class="active"><%= i %></a>
                     <% } else { %>
-                        <a href="/search?name=<%= toSearch %>&page=1">First</a>
-                    <% } %>
-                    <% let i = (Number(tickers.page) > 5 ? Number(tickers.page) - 4 : 1) %>
-                    <% if (i !== 1) { %>
-                        <a>...</a>
-                    <% } %>
-                    <% for (; i <= (Number(tickers.page) + 4) && i <= tickers.pages; i++) { %>
-                        <% if (i == tickers.page) { %>
-                            <a class="active"><%= i %></a>
-                        <% } else { %>
-                            <a href="/search?name=<%= toSearch %>&page=<%= i %>"><%= i %></a>
-                        <% } %>
-                        <% if (i == Number(tickers.page) + 4 && i < tickers.pages) { %>
-                            <a>...</a>
-                        <% } %>
-                    <% } %>
-                    <% if (tickers.page == tickers.pages) { %>
-                        <a>Last</a>
-                    <% } else { %>
-                        <a href="/search?name=<%= toSearch %>&page=<%= tickers.pages %>">Last</a>
+                        <a href="/search?name=<%= toSearch %>&page=<%= i %>"><%= i %></a>
                     <% } %>
                 <% } %>
-            </div>
+                <% if (i <= tickers.pages) { %>
+                    <a>...</a>
+                <% } %> 
+            <% } else if (tickers.page > 6 && tickers.page <= tickers.pages - 6) { // between 6 and last page - 6 %>
+                <% let i = (Number(tickers.page) > 5 ? Number(tickers.page) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                    <a>...</a>
+                <% } %>
+                <% for (; i <= (Number(tickers.page) + 4) && i <= tickers.pages; i++) { %>
+                    <% if (i == tickers.page) { %>
+                        <a class="active"><%= i %></a>
+                    <% } else { %>
+                        <a href="/search?name=<%= toSearch %>&page=<%= i %>"><%= i %></a>
+                    <% } %>
+                    <% if (i == Number(tickers.page) + 4 && i < tickers.pages) { %>
+                        <a>...</a>
+                    <% } %>
+                <% } %>
+            <% } else { // current page > last page - 6 %>
+                <% let i = tickers.pages - 10; %>
+                <% if (i >= 1) { %>
+                    <a>...</a>
+                <% } %> 
+                <% for (i = i+1; i <= tickers.pages; i++) { %>
+                    <% if (i == tickers.page) { %>
+                        <a class="active"><%= i %></a>
+                    <% } else { %>
+                        <a href="/search?name=<%= toSearch %>&page=<%= i %>"><%= i %></a>
+                    <% } %>
+                <% } %>
+            <% } %> 
+            <% if (tickers.page == tickers.pages) { %>
+                    <a>Last</a>
+                <% } else { %>
+                    <a href="/search?name=<%= toSearch %>&page=<%= tickers.pages %>">Last</a>
+                <% } %>
+        <% } %>
+    </div>
 
 
 </body>

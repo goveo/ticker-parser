@@ -90,7 +90,10 @@ async function findTickerByName(name, page) {
         }
     }, {
             limit: 10,
-            page: page
+            page: page,
+            sort: {
+                name: 1
+            }
         }, (err, data) => {
             if (err) {
                 console.log("err");
