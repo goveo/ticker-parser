@@ -37,7 +37,12 @@
                         </div>
                         <!--end of col-->
                     </div>
-	</div>
+    </div>
+    <%if(tickers.docs.length == 0) {%>
+        <div style="text-align: center"> 
+            <h3>Nothing found</h3>
+        </div>    
+    <%} else {%>
 	<table id="mytable" class="table table-bordred table-striped">
                    
         <thead>
@@ -126,7 +131,7 @@
                 <% } else { %>
                     <a href="/search?name=<%= toSearch %>&page=<%= tickers.pages %>">Last</a>
                 <% } %>
-        <% } %>
+        <% }} %>
     </div>
 
 
